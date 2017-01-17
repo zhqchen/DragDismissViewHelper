@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             if (holder.tvUnread.getTag() == null) {
                 helper = new DragDismissViewHelper(context, holder.tvUnread);
                 helper.setPaintColor(Color.RED);
-                helper.setFarthestDistance(250);
+                helper.setFarthestDistance(180);
                 holder.tvUnread.setTag(helper);
             } else {
                 helper = (DragDismissViewHelper) holder.tvUnread.getTag();

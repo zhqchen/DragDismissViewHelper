@@ -29,5 +29,5 @@ publish {
     artifactId = 'dragdismiss'//项目名称
     publishVersion = '1.0.0'//版本号
     desc = 'Android DragDismissView like the dismiss of circle red point of QQ'//描述
-    website = 'https://github.com/zhqchen/NineGridView'
+    website = 'https://github.com/zhqchen/DragDismissViewHelper'
 }

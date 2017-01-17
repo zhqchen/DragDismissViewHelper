@@ -24,7 +24,7 @@ import android.widget.ImageView;
  */
 class DragDismissView extends FrameLayout {
 
-    private float FARTHEST_DISTANCE_DEFAULT = 250;//拖动的最远距离,可自己配置
+    private float FARTHEST_DISTANCE_DEFAULT = 180;//拖动的最远距离,可自己配置
     private float POINT_RADIUS_DEFAULT = 20;//默认圆点半径大小，即为被拖动view的大小，默认为20
     private float MIN_RADIUS = 8;//圆点的最小半径，为被拖动view大小的40%，默认是8
 
