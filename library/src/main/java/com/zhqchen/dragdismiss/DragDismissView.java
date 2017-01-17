@@ -39,7 +39,6 @@ class DragDismissView extends FrameLayout {
     private int[] startLocation = new int[2];//拖动起始View的中心点
     private int dragViewWidth;//拖动起始View的宽度
     private int dragViewHeight;//拖动起始View高度
-//    private int mStatusBarHeight;//手机状态栏高度. 因RedPointViewHelper中已设置为全屏的模式，点击的位置判断，不再需要减去状态栏的高度
 
     private boolean isNeedDrawBezierCurve = true;//是否已经被拖出指定区域外
     private float mRadius = POINT_RADIUS_DEFAULT;
