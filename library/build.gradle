@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release' // must be applied after your artifact generating plugin (eg. java / com.android.library)
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+publish {
+    userOrg = 'zhqchen'//bintray.com的组织名称
+    groupId = 'com.zhqchen'//jcenter上的路径
+    artifactId = 'dragdismiss'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = 'Android DragDismissView like the dismiss of circle red point of QQ'//描述
+    website = 'https://github.com/zhqchen/NineGridView'
+}

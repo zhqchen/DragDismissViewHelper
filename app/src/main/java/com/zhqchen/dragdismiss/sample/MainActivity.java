@@ -1,0 +1,142 @@
+package com.zhqchen.dragdismiss.sample;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.zhqchen.dragdismiss.DragDismissViewHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * Created by zhqchen on 2016-01-16.
+ */
+public class MainActivity extends AppCompatActivity {
+
+    ListView lvRedPoint;
+    Toolbar toolbar;
+
+    private List<UnreadItem> unreadItems;
+    private RedPointAdapter mAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initViews();
+    }
+
+    private void initViews() {
+        toolbar = (Toolbar) findViewById(R.id.tb_main);
+        lvRedPoint = (ListView) findViewById(R.id.lv_red_point);
+        toolbar.setTitle("Demo");
+
+        unreadItems = new ArrayList<>();
+        mAdapter = new RedPointAdapter(this, unreadItems);
+        lvRedPoint.setAdapter(mAdapter);
+
+        for (int i = 0; i < 20; i++) {
+            UnreadItem item = new UnreadItem("item" + i, i + 1);
+            unreadItems.add(item);
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    class RedPointAdapter extends BaseAdapter {
+        private Context context;
+        private List<UnreadItem> contents;
+        private DragDismissViewHelper.DragStateListener listener;
+
+        public RedPointAdapter(Context context, List<UnreadItem> contents) {
+            this.context = context;
+            this.contents = contents;
+        }
+
+        public void setDragListener(DragDismissViewHelper.DragStateListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        public int getCount() {
+            return contents.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return contents.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            ItemHolder holder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.item_common_text, null);
+                holder = new ItemHolder(convertView);
+                convertView.setTag(holder);
+            } else {
+                holder = (ItemHolder) convertView.getTag();
+            }
+            UnreadItem item = contents.get(position);
+            holder.tvContent.setText(item.content);
+            holder.tvUnread.setText(String.valueOf(item.unreadCount));
+            holder.tvUnread.setVisibility(item.unreadCount > 0 ? View.VISIBLE : View.GONE);
+            DragDismissViewHelper helper;//将helper与被拖动的view绑定
+            if (holder.tvUnread.getTag() == null) {
+                helper = new DragDismissViewHelper(context, holder.tvUnread);
+                holder.tvUnread.setTag(helper);
+            } else {
+                helper = (DragDismissViewHelper) holder.tvUnread.getTag();
+            }
+
+            helper.setDragStateListener(new DragDismissViewHelper.DragStateListener() {
+
+                @Override
+                public void onOutFingerUp(View view) {
+                    contents.get(position).unreadCount = 0;
+                    notifyDataSetChanged();
+                }
+
+                @Override
+                public void onInnerFingerUp(View view) {
+                    notifyDataSetChanged();
+                }
+            });
+            return convertView;
+        }
+
+    }
+
+    static class ItemHolder {
+        TextView tvUnread;
+        TextView tvContent;
+
+        ItemHolder(View convertView) {
+            tvUnread = (TextView) convertView.findViewById(R.id.tv_unread);
+            tvContent = (TextView) convertView.findViewById(R.id.tv_content);
+        }
+    }
+
+    static class UnreadItem {
+        public UnreadItem(String content, int unreadCount) {
+            this.content = content;
+            this.unreadCount = unreadCount;
+        }
+
+        public String content;
+        public int unreadCount;
+    }
+}
