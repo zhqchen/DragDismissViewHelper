@@ -123,7 +123,7 @@ class DragDismissView extends FrameLayout {
      * @param originView
      * @param drawingCache
      */
-    public void setStartCenterPoint(View originView, Bitmap drawingCache) {
+    protected void setStartCenterPoint(View originView, Bitmap drawingCache) {
         int width = originView.getWidth();
         int height = originView.getHeight();
         originView.getLocationOnScreen(startLocation);
@@ -142,7 +142,7 @@ class DragDismissView extends FrameLayout {
 //        invalidate();
     }
 
-    public void setCurrentStateListener(CurrentStateListener listener) {
+    protected void setCurrentStateListener(CurrentStateListener listener) {
         this.currentStateListener = listener;
     }
 

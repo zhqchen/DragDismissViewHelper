@@ -2,7 +2,6 @@ package com.zhqchen.dragdismiss;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +21,9 @@ public class DragDismissViewHelper implements View.OnTouchListener {
     private WindowManager.LayoutParams mParams;
 
     private DragStateListener dragStateListener;
+
+    private int paintColor = -1;//连接线的颜色
+    private float farthestDistance = -1;//最远拖动距离
 
     public interface DragStateListener {
 
@@ -71,7 +73,12 @@ public class DragDismissViewHelper implements View.OnTouchListener {
         Bitmap bitmap = Bitmap.createBitmap(originView.getDrawingCache());
         originView.setDrawingCacheEnabled(false);
         //y需减去手机状态栏的高度
-        dismissView.setPaintColor(Color.RED);
+        if(paintColor != -1) {
+            dismissView.setPaintColor(paintColor);
+        }
+        if(farthestDistance != -1) {
+            dismissView.setFarthestDistance(farthestDistance);
+        }
         dismissView.setStartCenterPoint(originView, bitmap);
         dismissView.setCurrentStateListener(new DragDismissView.CurrentStateListener() {
             @Override
@@ -107,5 +114,21 @@ public class DragDismissViewHelper implements View.OnTouchListener {
         if(windowManager != null && dismissView.getParent() != null) {
             windowManager.removeView(dismissView);
         }
+    }
+
+    /**
+     * 设置贝塞尔曲线的画笔颜色
+     * @param color int
+     */
+    public void setPaintColor(int color) {
+        this.paintColor = color;
+    }
+
+    /**
+     * 设置最远拖动的距离
+     * @param distance float
+     */
+    public void setFarthestDistance(float distance) {
+        this.farthestDistance = distance;
     }
 }

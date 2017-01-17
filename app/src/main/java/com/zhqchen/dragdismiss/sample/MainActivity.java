@@ -1,6 +1,7 @@
 package com.zhqchen.dragdismiss.sample;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * demo activity
  * Created by zhqchen on 2016-01-16.
  */
 public class MainActivity extends AppCompatActivity {
@@ -51,18 +52,14 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
-    class RedPointAdapter extends BaseAdapter {
+    static class RedPointAdapter extends BaseAdapter {
+
         private Context context;
         private List<UnreadItem> contents;
-        private DragDismissViewHelper.DragStateListener listener;
 
         public RedPointAdapter(Context context, List<UnreadItem> contents) {
             this.context = context;
             this.contents = contents;
-        }
-
-        public void setDragListener(DragDismissViewHelper.DragStateListener listener) {
-            this.listener = listener;
         }
 
         @Override
@@ -97,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
             DragDismissViewHelper helper;//将helper与被拖动的view绑定
             if (holder.tvUnread.getTag() == null) {
                 helper = new DragDismissViewHelper(context, holder.tvUnread);
+                helper.setPaintColor(Color.RED);
+                helper.setFarthestDistance(250);
                 holder.tvUnread.setTag(helper);
             } else {
                 helper = (DragDismissViewHelper) holder.tvUnread.getTag();
