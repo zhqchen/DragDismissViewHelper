@@ -1,5 +1,5 @@
 # DragDismissViewHelper
-QQ的未读红点拖拽消失，
+QQ的未读红点拖拽消失的动画
 Android DragDismissView like the dismiss of circle red point of QQ
 
 ### 可设置参数
@@ -24,6 +24,11 @@ Android DragDismissView like the dismiss of circle red point of QQ
             // do something when finger up out of range
         }
     });
+```
+# 局限
+```
+    库中使用了android.permission.SYSTEM_ALERT_WINDOW的权限，sample中targetSdkVersion=22，绕过了权限的问题。
+    实际项目中，若targetSdkVersion >= 23时，需要自己提前进行权限的动态申请并确保用户允许。
 ```
 ### License
 
