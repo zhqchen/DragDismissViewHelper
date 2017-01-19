@@ -1,10 +1,11 @@
 # DragDismissViewHelper
-QQ的未读红点拖拽消失的动画
+仿QQ的未读红点拖拽消失的动画, 拖拽对象可为单个view，也可为ListView的Item中的任意view
 Android DragDismissView like the dismiss of circle red point of QQ
+![效果](./screenshots/drag.gif)
 
 ### 可设置参数
 ```
-    1. setPaintColor(int color) ：设置拖拽时，连接线的颜色，默认Color.RED.
+    1. setPaintColor(int color) ：设置拖拽时拉伸线的颜色，默认Color.RED.
     2. setFarthestDistance(float distance) ：设置拖拽的最远距离，默认180.
 ```
 ### 使用方式
@@ -25,7 +26,7 @@ Android DragDismissView like the dismiss of circle red point of QQ
         }
     });
 ```
-# 局限
+### 局限
 ```
     库中使用了android.permission.SYSTEM_ALERT_WINDOW的权限，sample中targetSdkVersion=22，绕过了权限的问题。
     实际项目中，若targetSdkVersion >= 23时，需要自己提前进行权限的动态申请并确保用户允许。
