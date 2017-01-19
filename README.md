@@ -1,6 +1,7 @@
 # DragDismissViewHelper
 仿QQ的未读红点拖拽消失的动画, 拖拽对象可为单个view，也可为ListView的Item中的任意view
 Android DragDismissView like the dismiss of circle red point of QQ
+
 ![效果](./screenshots/drag.gif)
 
 ### 可设置参数
