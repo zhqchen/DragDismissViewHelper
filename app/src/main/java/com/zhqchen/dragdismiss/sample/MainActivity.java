@@ -1,8 +1,13 @@
 package com.zhqchen.dragdismiss.sample;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -11,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhqchen.dragdismiss.DragDismissViewHelper;
 
@@ -22,6 +28,7 @@ import java.util.List;
  * Created by zhqchen on 2016-01-16.
  */
 public class MainActivity extends AppCompatActivity {
+    private final int REQUEST_CODE_ALERT_SETTING = 1;
 
     ListView lvRedPoint;
     Toolbar toolbar;
@@ -50,6 +57,27 @@ public class MainActivity extends AppCompatActivity {
             unreadItems.add(item);
         }
         mAdapter.notifyDataSetChanged();
+        requestPermission();
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT  >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(MainActivity.this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, REQUEST_CODE_ALERT_SETTING);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_ALERT_SETTING) {
+            if (!Settings.canDrawOverlays(this)) {
+                Toast.makeText(MainActivity.this, "SYSTEM_ALERT_WINDOW permission denied", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
     }
 
     static class RedPointAdapter extends BaseAdapter {
