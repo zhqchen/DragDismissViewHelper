@@ -39,7 +39,7 @@ public class DragDismissViewHelper implements View.OnTouchListener {
         mParams = new WindowManager.LayoutParams();
         mParams.format = PixelFormat.TRANSLUCENT;
         //这样设置type和flags，才会使拖动时的红点延伸至状态栏，且使状态栏不改变
-        mParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;//TYPE_SYSTEM_ALERT为系统提示窗，但无法覆盖住状态栏
+        mParams.type = WindowManager.LayoutParams.TYPE_TOAST;//不再需要权限SYSTEM_ALERT_WINDOW权限
         mParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;//窗口占满屏幕(会忽略状态栏), 而FLAG_FULLSCREEN会隐藏状态栏
     }
 
